@@ -12,10 +12,33 @@ const fraunces = Fraunces({
   subsets: ["latin"],
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Meeting Cost Calculator & Time Analytics Dashboard",
   description:
     "Quantify meeting spend, track ROI, and uncover time waste across teams.",
+  openGraph: {
+    title: "Meeting Cost Calculator",
+    description:
+      "Meeting ROI analytics and cost forecasting for modern teams.",
+    type: "website",
+    url: siteUrl,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Meeting Cost Calculator",
+    description:
+      "Meeting ROI analytics and cost forecasting for modern teams.",
+  },
+  keywords: [
+    "meeting cost calculator",
+    "time analytics",
+    "meeting roi",
+    "productivity analytics",
+  ],
 };
 
 export default function RootLayout({

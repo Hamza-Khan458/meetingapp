@@ -55,6 +55,7 @@ export const pricingTiers = [
       "1 PDF export/month",
     ],
     cta: "Start free",
+    href: "/calculator",
   },
   {
     name: "Pro",
@@ -68,6 +69,7 @@ export const pricingTiers = [
       "Forecasting + cohorts",
     ],
     cta: "Launch Pro",
+    href: "/dashboard",
   },
   {
     name: "Enterprise",
@@ -80,5 +82,6 @@ export const pricingTiers = [
       "Dedicated success",
     ],
     cta: "Talk to sales",
+    href: "mailto:sales@meetingcost.app?subject=Enterprise%20demo",
   },
 ];

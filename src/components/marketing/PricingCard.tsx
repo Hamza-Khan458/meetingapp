@@ -1,9 +1,12 @@
+import Link from "next/link";
+
 type PricingCardProps = {
   name: string;
   price: string;
   description: string;
   features: string[];
   cta: string;
+  href: string;
   highlighted?: boolean;
 };
 
@@ -13,6 +16,7 @@ export default function PricingCard({
   description,
   features,
   cta,
+  href,
   highlighted,
 }: PricingCardProps) {
   return (
@@ -38,15 +42,16 @@ export default function PricingCard({
           </li>
         ))}
       </ul>
-      <button
-        className={`mt-8 w-full rounded-full px-4 py-3 text-sm font-semibold transition ${
+      <Link
+        href={href}
+        className={`mt-8 w-full rounded-full px-4 py-3 text-center text-sm font-semibold transition ${
           highlighted
             ? "bg-emerald-300 text-slate-900 hover:bg-emerald-200"
             : "border border-white/20 text-white hover:border-emerald-300/60"
         }`}
       >
         {cta}
-      </button>
+      </Link>
     </div>
   );
 }

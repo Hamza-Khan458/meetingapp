@@ -16,9 +16,18 @@ export default function Home() {
             </span>
           </div>
           <div className="flex items-center gap-6 text-xs uppercase tracking-[0.2em] text-slate-300">
-            <span>Product</span>
-            <span>Analytics</span>
-            <span>Pricing</span>
+            <a href="#product" className="text-slate-300">
+              Product
+            </a>
+            <a href="#analytics" className="text-slate-300">
+              Analytics
+            </a>
+            <a href="#pricing" className="text-slate-300">
+              Pricing
+            </a>
+            <Link href="/blog" className="text-slate-300">
+              Insights
+            </Link>
           </div>
           <Link
             href="/dashboard"
@@ -90,7 +99,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="space-y-10">
+        <section id="product" className="scroll-mt-28 space-y-10">
           <SectionHeader
             eyebrow="Why it matters"
             title="Every meeting leaves a money trail."
@@ -103,7 +112,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+        <section id="analytics" className="scroll-mt-28 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-6">
             <SectionHeader
               eyebrow="Analytics"
@@ -157,7 +166,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="space-y-10">
+        <section id="pricing" className="scroll-mt-28 space-y-10">
           <SectionHeader
             eyebrow="Pricing"
             title="Start free, scale to enterprise impact."

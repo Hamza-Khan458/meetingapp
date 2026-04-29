@@ -1,7 +1,58 @@
+"use client";
+
+import { useState } from "react";
 import StatTile from "@/components/dashboard/StatTile";
 import TrendChart from "@/components/dashboard/TrendChart";
 
 export default function DashboardPage() {
+  const [isExporting, setIsExporting] = useState(false);
+  const [shareStatus, setShareStatus] = useState<string | null>(null);
+
+  const handleExport = async () => {
+    try {
+      setIsExporting(true);
+      const response = await fetch("/api/report", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          title: "Meeting Cost Summary",
+          summary:
+            "Weekly meeting cost trend with forecasted savings opportunities.",
+          stats: [
+            { label: "Monthly spend", value: "$48,920" },
+            { label: "Hours in meetings", value: "1,420" },
+            { label: "Projected savings", value: "$52.3k" },
+          ],
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Report generation failed");
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = "meeting-report.pdf";
+      anchor.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      setShareStatus("PDF export failed. Try again.");
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setShareStatus("Dashboard link copied.");
+    } catch (error) {
+      setShareStatus("Copy failed. Use the URL bar instead.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 px-6 py-10 text-slate-50 sm:px-10">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
@@ -14,13 +65,23 @@ export default function DashboardPage() {
               Meeting spend intelligence
             </h1>
           </div>
-          <div className="flex gap-3">
-            <button className="rounded-full border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white">
-              Export PDF
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={handleExport}
+              disabled={isExporting}
+              className="rounded-full border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isExporting ? "Exporting..." : "Export PDF"}
             </button>
-            <button className="rounded-full bg-emerald-300 px-4 py-2 text-xs font-semibold text-slate-900">
+            <button
+              onClick={handleShare}
+              className="rounded-full bg-emerald-300 px-4 py-2 text-xs font-semibold text-slate-900"
+            >
               Share summary
             </button>
+            {shareStatus ? (
+              <span className="text-xs text-emerald-200">{shareStatus}</span>
+            ) : null}
           </div>
         </header>
 
