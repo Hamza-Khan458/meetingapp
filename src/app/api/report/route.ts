@@ -17,13 +17,15 @@ export async function POST(req: Request) {
     headers: {
       "content-type": "application/json",
       authorization: `Bearer ${serviceRoleKey}`,
+      apikey: serviceRoleKey,
     },
     body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
+    const details = await response.text();
     return NextResponse.json(
-      { error: "Report generation failed" },
+      { error: "Report generation failed", details },
       { status: response.status }
     );
   }
